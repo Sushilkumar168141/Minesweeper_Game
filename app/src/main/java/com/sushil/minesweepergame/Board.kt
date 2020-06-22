@@ -52,14 +52,18 @@ class Board : AppCompatActivity() {
             restartAlert()
         })
         FlagRemaining.text = app.GetMines().toString()
+        GameEngine.getInstance()?.handler!!.removeCallbacks(GameEngine.getInstance()?.runnableCode)
         GameEngine.getInstance()?.timertextview = TimerTextView
         GameEngine.getInstance()?.FlagRemainingtextview = FlagRemaining
+        GameEngine.getInstance()?.flag = 0
+        GameEngine.getInstance()?.time = 0
         GameEngine.getInstance()?.con = this
-        GameEngine.getInstance()?.isFirstClick = true
+        GameEngine.getInstance()?.isFirstClick = false
         GameEngine.getInstance()?.createGrid(this)
         GameEngine.getInstance()?.setCellValue(this)
         //TimerTextView.text = "00:10"
         //timer()
+
     }
 
     fun restartAlert() {
@@ -78,6 +82,7 @@ class Board : AppCompatActivity() {
                 GameEngine.getInstance()?.timertextview = TimerTextView
                 GameEngine.getInstance()?.FlagRemainingtextview = FlagRemaining
                 GameEngine.getInstance()?.flag = 0
+                GameEngine.getInstance()?.time = 0
                 GameEngine.getInstance()?.con = applicationContext
                 GameEngine.getInstance()?.isFirstClick = false
                 GameEngine.getInstance()?.createGrid(applicationContext)

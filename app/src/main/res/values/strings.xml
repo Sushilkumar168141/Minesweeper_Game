@@ -2,9 +2,9 @@
     <string name="app_name">Minesweeper Game</string>
     <string name="easy">Easy</string>
     <string name="game_name">minesweeper</string>
-    <string name="last_game_time">Last Game Time : 0s</string>
+    <string name="last_game_time">Last Game Time : 00:00</string>
     <string name="select_difficulty">Select Difficulty</string>
-    <string name="best_time_">Best Time : 0s</string>
+    <string name="best_time_">Best Time : 00:00</string>
     <string name="hard">Hard</string>
     <string name="medium">Medium</string>
     <string name="or">Or</string>

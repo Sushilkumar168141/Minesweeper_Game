@@ -2,6 +2,7 @@ package com.sushil.minesweepergame
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
@@ -51,10 +52,15 @@ class GameEngine : AppCompatActivity() {
     var RestartButton : Button? = null
     var lastGameTime : TextView? = null
     var bestGameTime : TextView? = null
+    var bestTime = 0
+    var time = 0
+    var minutes_string = ""
+    var seconds_string = ""
     var cellsNotClicked = 0
     var gameWon = false
     var gameLost = false
     var newgame = true
+    var newSharedPreferences : SharedPreferences? = null
     var handler = Handler()
     var runnableCode = object : Runnable {
         override fun run() {
@@ -147,6 +153,7 @@ class GameEngine : AppCompatActivity() {
                 setCellValue(con)
             }
             isFirstClick = false
+            time = 0
             timer()
             handler.post(runnableCode)
             //Board().timer()
@@ -241,6 +248,17 @@ class GameEngine : AppCompatActivity() {
         Toast.makeText(context, "Game Won", Toast.LENGTH_LONG).show()
         handler.removeCallbacks(runnableCode)
         isFirstClick = false
+
+        lastGameTime!!.text = "Last Game Time : $minutes_string:$seconds_string"
+        newSharedPreferences!!.edit().putString("Last Game Time", "Last Game Time : $minutes_string:$seconds_string").apply()
+        if (time < newSharedPreferences!!.getInt("Best Time", Int.MAX_VALUE)) {
+            bestTime = time
+            Log.i("GameEngine : timer", "best time = $bestTime")
+            bestGameTime!!.text = "Best Game Time : $minutes_string:$seconds_string"
+            newSharedPreferences!!.edit().putInt("Best Time", bestTime).apply()
+            newSharedPreferences!!.edit().putString("Best Game Time", "Best Game Time : $minutes_string:$seconds_string").apply()
+        }
+
         for (x in 0 until app.GetCols()) {
             for (y in 0 until app.GetRows()) {
                 //getCellAt(x, y)!!.setRevealed()
@@ -277,11 +295,12 @@ class GameEngine : AppCompatActivity() {
     }
 
     fun timer() {
-        var time = 0
+        //var time = 0
+        //var bestTime = 0
         var seconds = 0
         var minutes = 0
-        var minutes_string = minutes.toString()
-        var seconds_string = seconds.toString()
+        minutes_string = minutes.toString()
+        seconds_string = seconds.toString()
         handler = Handler()
         runnableCode = object : Runnable {
             override fun run() {
@@ -304,6 +323,8 @@ class GameEngine : AppCompatActivity() {
                 //Timertextview.text = "00:10"
                 //Timertextview.text = binding.resources.getString(R.string.app_name)
                 timertextview!!.text = "$minutes_string:$seconds_string"
+
+
                 handler.postDelayed(this, 1000)
             }
         }

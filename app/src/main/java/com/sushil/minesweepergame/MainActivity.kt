@@ -3,6 +3,7 @@ package com.sushil.minesweepergame
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import com.sushil.minesweepergame.Variables
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.sushil.minesweepergame.views.grid.Grid
 
 class MainActivity : AppCompatActivity() {
     var app = Variables()
+    var best_time = 0
     lateinit var con : Context
     //var context = applicationContext
     //var appContext = applicationContext
@@ -43,8 +45,19 @@ class MainActivity : AppCompatActivity() {
 
         var LastGameTime = findViewById<TextView>(R.id.textViewLastGameTime)
         var BestGameTime = findViewById<TextView>(R.id.textViewBestGameTime)
+
+        var sharedPreferences : SharedPreferences = this.getSharedPreferences("com.sushil.minesweepergame", Context.MODE_PRIVATE)
+
+        LastGameTime.text = sharedPreferences.getString("Last Game Time", "Last Game Time : 00:00")
+        BestGameTime.text = sharedPreferences.getString("Best Game Time", "Best Game Time : 00:00")
+        //LastGameTime.text = sharedPreferences.getString("Last Game Time", "")
+        Log.i("Main : SharedPreference", sharedPreferences.getString("Last Game Time",""))
+        Log.i("Main : SharedPreference", sharedPreferences.getString("Best Game Time",""))
+        Log.i("Main : SharedPreference", sharedPreferences.getInt("Best Time", Int.MAX_VALUE).toString())
+        GameEngine.getInstance()?.newSharedPreferences = sharedPreferences
         GameEngine.getInstance()?.lastGameTime = LastGameTime
         GameEngine.getInstance()?.bestGameTime = BestGameTime
+        //GameEngine.getInstance()?.bestTime = best_time
 
 
 
@@ -167,7 +180,6 @@ class MainActivity : AppCompatActivity() {
         Log.i("Information", "MainActivity : GoToBoardActivity : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
         //setContentView(R.layout.activity_board)
         setupBoard(app.GetRows(), app.GetCols(), app.GetMines())
-        GameEngine.getInstance()?.isFirstClick = true
         //GameEngine.getInstance()?.createGrid(this)
         //GameEngine.getInstance()?.setCellValue(this)
         //val intent =  Intent(applicationContext,  Board::class.java)
