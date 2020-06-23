@@ -1,21 +1,17 @@
+/* Class to perform various operation based on the state of the game */
+
 package com.sushil.minesweepergame
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Bundle
-import android.os.Handler
-import android.os.PersistableBundle
-import android.os.Vibrator
+import android.os.*
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.GridLayoutAnimationController
-import android.widget.Button
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import com.sushil.minesweepergame.views.grid.Cell
@@ -23,7 +19,7 @@ import com.sushil.minesweepergame.Variables
 import com.sushil.minesweepergame.util.Generator
 import com.sushil.minesweepergame.util.PrintGrid
 import  com.sushil.minesweepergame.R
-import com.sushil.minesweepergame.databinding.ActivityBoardBinding
+//import com.sushil.minesweepergame.databinding.ActivityBoardBinding
 import com.sushil.minesweepergame.views.grid.AppContext
 import com.sushil.minesweepergame.views.grid.Grid
 import kotlinx.android.synthetic.main.activity_board.*
@@ -58,16 +54,18 @@ class GameEngine : AppCompatActivity() {
     var minutes_string = ""
     var seconds_string = ""
     var cellsNotClicked = 0
-    var gameWon = false
-    var gameLost = false
+    //var gameWon = false
+    //var gameLost = false
+    var gameEnd = true
     var newgame = true
     var newSharedPreferences : SharedPreferences? = null
     var vibe : Vibrator? = null
+    //var vibrate: Vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     var handler = Handler()
     var runnableCode = object : Runnable {
         override fun run() {
             //TODO("Not yet implemented")
-            Log.i("djfsdk","fjdfkj")
+            //Log.i("djfsdk","fjdfkj")
         }
     }
     //var binding = ActivityBoardBinding.inflate(layoutInflater)
@@ -85,6 +83,7 @@ class GameEngine : AppCompatActivity() {
         }
     }
 
+    // Creating grid of the game
     fun createGrid(context: Context) {
         Log.e("GameEngine", "createGrid is working")
         this.context = context
@@ -97,8 +96,9 @@ class GameEngine : AppCompatActivity() {
     }
 
     //private fun setGrid(context: Context, grid: Array<IntArray>) {
+    // Setting view to the grid of the game so that user can click on the cells.
     fun setGrid(context: Context) {
-        Log.i("GameEngine SetGrid","app.GetRows = ${app.GetRows()}, app.GetCols = ${app.GetCols()}")
+        //Log.i("GameEngine SetGrid","app.GetRows = ${app.GetRows()}, app.GetCols = ${app.GetCols()}")
         //WIDTH = app.GetCols()
         //HEIGHT = app.GetRows()
         for (x in 0 until app.GetCols()) {
@@ -117,6 +117,7 @@ class GameEngine : AppCompatActivity() {
     }
 
     //private fun setCellValue(context:Context, grid:Array<IntArray>) {
+    // Setting values of the cells of the grid.
     fun setCellValue(context:Context) {
         GeneratedGrid= Generator.generate(app.GetMines(), app.GetCols(), app.GetRows())
         PrintGrid.print(GeneratedGrid, app.GetCols(), app.GetRows())
@@ -134,20 +135,26 @@ class GameEngine : AppCompatActivity() {
         isFirstClick = true
     }
 
+    // Function to get cell at particular position
     fun getCellAt(position: Int): Cell? {
         //val x = position % WIDTH
         //val y = position / WIDTH
         val x = position % app.GetCols()
         val y = position / app.GetCols()
-        Log.i("Information", "GameEngine : GetCellAt : position = $position, width = ${app.GetCols()}, x = $x, y = $y")
+        //Log.i("Information", "GameEngine : GetCellAt : position = $position, width = ${app.GetCols()}, x = $x, y = $y")
         return MinesweeperGrid[x][y]
     }
 
+    // Function to get cell at particular position by passing x and y coordinates.
     fun getCellAt(x: Int, y: Int): Cell? {
         return MinesweeperGrid[x][y]
     }
 
+    // Function to perform various  operation when user clicks a cell.
     fun click(x: Int, y: Int) {
+
+        // If it is first click and user clicked a bomb then we are setting up the game again.
+        gameEnd = false
         if (isFirstClick) {
             //setCellValue(con)
             while (getCellAt(x, y)!!.getValue() == -1) {
@@ -156,6 +163,7 @@ class GameEngine : AppCompatActivity() {
             }
             isFirstClick = false
             time = 0
+            // Start the timer at first click.
             timer()
             handler.post(runnableCode)
             //Board().timer()
@@ -163,9 +171,13 @@ class GameEngine : AppCompatActivity() {
         }
         //newgame = false
         if (x >= 0 && y >= 0 && x < app.GetCols() && y < app.GetRows() && !getCellAt(x, y)!!.isClicked()) {
-            getCellAt(x, y)!!.setClicked()
             cellsNotClicked-=1
-            getCellAt(x,y )!!.isLongClickable = false
+            if (!getCellAt(x,y)!!.isFlagged()) {
+                getCellAt(x, y)!!.setClicked()
+                getCellAt(x, y)!!.isLongClickable = false
+            }
+
+            // If cell at some position is blank, then we keep clicking in all direction until a numbered cell is encountered.
             if (getCellAt(x, y)!!.getValue() == 0) {
                 for (xt in -1..1) {
                     for (yt in -1..1) {
@@ -175,14 +187,18 @@ class GameEngine : AppCompatActivity() {
                     }
                 }
             }
+            // Checking the end of the game
             checkEnd()
-            if (getCellAt(x, y)!!.isBomb()) {
+
+            // When a user click a bomb
+            if (getCellAt(x, y)!!.isBomb() && !getCellAt(x,y)!!.isFlagged()) {
                 onGameLost()
             }
         }
         //checkEnd()
     }
 
+    // Function to check end of the game.
     private fun checkEnd(): Boolean {
         var bombNotFound = app.GetMines()
         var notRevealed = app.GetCols() * app.GetRows()
@@ -197,7 +213,7 @@ class GameEngine : AppCompatActivity() {
                 if (getCellAt(x, y)!!.isFlagged() && getCellAt(x, y)!!.isBomb()) {
                     bombNotFound--
                 }
-                // block added by me
+                // If user manages to click every cell except the bombs then he win the gaem
                 if (cellsNotClicked == app.GetMines() && !getCellAt(x, y)!!.isClicked()) {
                     //getCellAt(x, y)!!.isClickable = false
                     a = x
@@ -217,50 +233,73 @@ class GameEngine : AppCompatActivity() {
         return false
     }
 
+    // Function to perform operation when a cell is flagged.
     fun flag(x: Int, y: Int) {
         //var bomb = app.GetMines()
         //flag++
-        vibe!!.vibrate(80)
-        isFirstClick = false
+        // Vibrate for 80 milliseconds when a cell is flagged.
+        gameEnd = false
+        vibe!!.vibrate(500)
+        //Log.i("GameEngine : Flag", "Vibrated")
+        if (isFirstClick) {
+            //setCellValue(con)
+            isFirstClick = false
+            time = 0
+            // Start the timer at first click.
+            timer()
+            handler.post(runnableCode)
+            //Board().timer()
+
+        }
+        //isFirstClick = false
+
+
+
         var isFlagged = getCellAt(x, y)!!.isFlagged()
-        getCellAt(x, y)!!.setFlagged(!isFlagged)
-        if (getCellAt(x,y)!!.isFlagged()) {
+        // Setting the cell flagged if a cell was not flagged and vice versa
+
+        if (!getCellAt(x,y)!!.isFlagged()) {
+            if (flag == app.GetMines()) {
+                Toast.makeText(con, "No more mines can be flagged", Toast.LENGTH_SHORT).show()
+                return
+            }
+            getCellAt(x, y)!!.setFlagged(true)
+            getCellAt(x,y)!!.isClickable = false
+            //Toast.makeText(con, "flag = $flag", Toast.LENGTH_SHORT).show()
             flag++
         }
-        else if (!getCellAt(x,y)!!.isFlagged()) {
+        else if (getCellAt(x,y)!!.isFlagged()) {
+            getCellAt(x, y)!!.setFlagged(false)
             flag--
         }
-        FlagRemainingtextview!!.text = (BOMB_NUMBER-flag).toString()
+        FlagRemainingtextview!!.text = (app.GetMines()-flag).toString()
         getCellAt(x, y)!!.invalidate()
     }
-    // TODO {"Make the FlagRemaining TextView working"}
-    /*private fun updateTextViewFlagRemaining(flagRemaining : Int) {
-        *//*var layout = R.layout.activity_board
-        textViewFlagRemaining = findViewById<TextView>(R.id.textViewFlagRemaining)
-        var isFlagged = getCellAt(x,y)!!.isFlagged()
-        if(isFlagged) {
-            textViewFlagRemaining.text = BOMB_NUMBER.toString()
-        }
-        else {
-            textViewFlagRemaining.text = BOMB_NUMBER.toString()
-        }*//*
-        textViewFlagRemaining.text = flagRemaining.toString()
-    }*/
 
+    // Function when user won the game
     private fun onGameWon(a: Int, b: Int) {
+        gameEnd = true
+        // Show message in a toast
         Toast.makeText(context, "Game Won", Toast.LENGTH_LONG).show()
+
+
+        // Stop the timer
         handler.removeCallbacks(runnableCode)
         isFirstClick = false
 
+        // Setting last game time
         lastGameTime!!.text = "Last Game Time : $minutes_string:$seconds_string"
         newSharedPreferences!!.edit().putString("Last Game Time", "Last Game Time : $minutes_string:$seconds_string").apply()
+
+        // Setting best game time
         if (time < newSharedPreferences!!.getInt("Best Time", Int.MAX_VALUE)) {
             bestTime = time
-            Log.i("GameEngine : timer", "best time = $bestTime")
+            //Log.i("GameEngine : timer", "best time = $bestTime")
             bestGameTime!!.text = "Best Game Time : $minutes_string:$seconds_string"
             newSharedPreferences!!.edit().putInt("Best Time", bestTime).apply()
             newSharedPreferences!!.edit().putString("Best Game Time", "Best Game Time : $minutes_string:$seconds_string").apply()
         }
+
 
         for (x in 0 until app.GetCols()) {
             for (y in 0 until app.GetRows()) {
@@ -275,13 +314,20 @@ class GameEngine : AppCompatActivity() {
 
     }
 
+    // Function to perform operation when user lost the game
     private fun onGameLost() {
         // handle lost game
         //isGameOver = true
-        gameLost = true
+        gameEnd = true
+
+
+        // Show Game lost message in a  toast.
         Toast.makeText(context, "Game lost", Toast.LENGTH_LONG).show()
+
+        //Stop the timer.
         handler.removeCallbacks(runnableCode)
         isFirstClick = false
+        // Revealing all the cells.
         for (x in 0 until app.GetCols()) {
             for (y in 0 until app.GetRows()) {
                 //getCellAt(x, y)!!.setRevealed()
@@ -295,8 +341,10 @@ class GameEngine : AppCompatActivity() {
             }
 
         }
+
     }
 
+    // Function to manage timer
     fun timer() {
         //var time = 0
         //var bestTime = 0
@@ -322,7 +370,7 @@ class GameEngine : AppCompatActivity() {
                 else {
                     seconds_string = seconds.toString()
                 }
-                Log.i("GameEngine_Timer", "second = $time")
+                //Log.i("GameEngine_Timer", "second = $time")
                 //Timertextview.text = "00:10"
                 //Timertextview.text = binding.resources.getString(R.string.app_name)
                 timertextview!!.text = "$minutes_string:$seconds_string"

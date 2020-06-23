@@ -2,6 +2,7 @@ package com.sushil.minesweepergame.util
 
 import android.util.Log
 
+// Print Grid of the game in logs.
 object PrintGrid {
     fun print(grid: Array<IntArray>, width: Int, height: Int) {
         for (x in 0 until height) {

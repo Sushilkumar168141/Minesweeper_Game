@@ -1,3 +1,5 @@
+/* Main Activity to starts the game with */
+
 package com.sushil.minesweepergame
 
 import android.content.Context
@@ -29,59 +31,76 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        // Setting  view of the activity
         setContentView(view)
-        //var intent = Intent(this@MainActivity, Board::class.java)
-        //startActivity(intent)
 
-        //var buttonStart = findViewById<Button>(R.id.button_start)
+        // Getting reference of the start button in activity_main
         var buttonStart = binding.buttonStart
         buttonStart.setOnClickListener(View.OnClickListener {
             GoToBoardActivity()
         })
 
+        // Getting reference of the CustomBoard button in activity_main
         var buttonCustom = findViewById<Button>(R.id.button_custom_board)
         buttonCustom.setOnClickListener(View.OnClickListener {
             CustomBoardInputs()
         })
 
-        var vibrate : Vibrator = applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        var buttonShare : Button = findViewById(R.id.buttonShareScore)
+        buttonShare.setOnClickListener(View.OnClickListener {
+            shareScore()
+        })
+
+        // Setting vibrator for game
+        var vibrate: Vibrator = applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         GameEngine.getInstance()?.vibe = vibrate
 
+        // Getting reference of the last game time and best game time text view
         var LastGameTime = findViewById<TextView>(R.id.textViewLastGameTime)
         var BestGameTime = findViewById<TextView>(R.id.textViewBestGameTime)
 
-        var sharedPreferences : SharedPreferences = this.getSharedPreferences("com.sushil.minesweepergame", Context.MODE_PRIVATE)
+        // Setting shared preferences to store the last game time and best game time
+        var sharedPreferences: SharedPreferences =
+            this.getSharedPreferences("com.sushil.minesweepergame", Context.MODE_PRIVATE)
 
+        // Setting text of last game time from shared preferences.
         LastGameTime.text = sharedPreferences.getString("Last Game Time", "Last Game Time : 00:00")
+
+        // Setting text of best game time from shared preferences.
         BestGameTime.text = sharedPreferences.getString("Best Game Time", "Best Game Time : 00:00")
         //LastGameTime.text = sharedPreferences.getString("Last Game Time", "")
-        Log.i("Main : SharedPreference", sharedPreferences.getString("Last Game Time",""))
-        Log.i("Main : SharedPreference", sharedPreferences.getString("Best Game Time",""))
-        Log.i("Main : SharedPreference", sharedPreferences.getInt("Best Time", Int.MAX_VALUE).toString())
+        //Log.i("Main : SharedPreference", sharedPreferences.getString("Last Game Time", ""))
+        //Log.i("Main : SharedPreference", sharedPreferences.getString("Best Game Time", ""))
+        //Log.i("Main : SharedPreference",sharedPreferences.getInt("Best Time", Int.MAX_VALUE).toString())
         GameEngine.getInstance()?.newSharedPreferences = sharedPreferences
         GameEngine.getInstance()?.lastGameTime = LastGameTime
         GameEngine.getInstance()?.bestGameTime = BestGameTime
         //GameEngine.getInstance()?.bestTime = best_time
-
-
-
     }
-//
-//   fun GetInstance(): MainActivity {
-//        return instance
-//   }
 
+    private fun shareScore() {
+        val sendIntent : Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "Hi, My Best Time for Minesweeper Game is ${(findViewById<TextView>(R.id.textViewBestGameTime) as TextView).text.toString().subSequence(15,22)} minutes")
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent,null)
+        startActivity(shareIntent)
+        Log.i("Main : Share",(findViewById<TextView>(R.id.textViewBestGameTime) as TextView).text.toString())
+    }
+
+    // Function to set up the board
     fun setupBoard(rows: Int, cols:Int, mines: Int) {
         app.SetRows(rows)
         app.SetCols(cols)
         app.SetMines(mines)
-        Log.i("Information", "MainActivity : setupBoard : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
+        //Log.i("Information", "MainActivity : setupBoard : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
         //Generator.generate(app.GetMines(), app.GetCols(), app.GetRows())
     }
 
-
+    // Function to get difficulty levels from various radio buttons
     fun GetDifficulty(view : View) {
-        Log.i("MainActivity", "inside get difficulty function")
+        //Log.i("MainActivity", "inside get difficulty function")
         if (view is RadioButton) {
             val checked = view.isChecked
             when (view.getId()) {
@@ -112,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Function to get input from the user if user want to set up a custom board using an dialog view.
     fun CustomBoardInputs() {
         val builder = AlertDialog.Builder(this)
         con = this
@@ -152,15 +172,8 @@ class MainActivity : AppCompatActivity() {
                         app.SetRows(rows_count_int)
                         app.SetCols(cols_count_int)
                         app.SetMines(mines_count_int)
-                        Log.i(
-                            "Information",
-                            "MainActivity : CustomBoardInputs : Value of rows count is {$rows_count_string}, cols count is {$cols_count_string}, mines count is {$mines_count_string}."
-                        )
-                        setupBoard(
-                            rows_count_string.toInt(),
-                            cols_count_string.toInt(),
-                            mines_count_string.toInt()
-                        )
+                        //Log.i("Information", "MainActivity : CustomBoardInputs : Value of rows count is {$rows_count_string}, cols count is {$cols_count_string}, mines count is {$mines_count_string}.")
+                        setupBoard(rows_count_string.toInt(), cols_count_string.toInt(), mines_count_string.toInt())
                         GoToBoardActivity()
                     }
                     else {
@@ -180,8 +193,9 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+    // Going to another activity when user clicked the start button.
     fun GoToBoardActivity() {
-        Log.i("Information", "MainActivity : GoToBoardActivity : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
+        //Log.i("Information", "MainActivity : GoToBoardActivity : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
         //setContentView(R.layout.activity_board)
         setupBoard(app.GetRows(), app.GetCols(), app.GetMines())
         //GameEngine.getInstance()?.createGrid(this)
@@ -196,8 +210,4 @@ class MainActivity : AppCompatActivity() {
         //GameEngine.getInstance()?.createGrid(getMainContext())
     }
 }
-//TODO {
-// 1. 
-//
-//
-// }
+
