@@ -2,18 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sushil.minesweepergame">
     <uses-permission android:name="android.permission.VIBRATE"/>
-
     <application
         android:name=".Variables"
         android:allowBackup="true"
-        android:icon="@mipmap/minesweepeer_game_icon"
+        android:icon="@mipmap/minesweeper_round_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/minesweeper_game_round_icon"
+        android:roundIcon="@mipmap/minesweeper_round_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Board" />
-        <activity android:name=".GameEngine"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Board"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GameEngine"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
