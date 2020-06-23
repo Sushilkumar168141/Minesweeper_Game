@@ -64,12 +64,9 @@ class MainActivity : AppCompatActivity() {
         // Setting text of best game time from shared preferences.
         BestGameTime.text = sharedPreferences.getString("Best Game Time", "Best Game Time : 00:00")
         //LastGameTime.text = sharedPreferences.getString("Last Game Time", "")
-        Log.i("Main : SharedPreference", sharedPreferences.getString("Last Game Time", ""))
-        Log.i("Main : SharedPreference", sharedPreferences.getString("Best Game Time", ""))
-        Log.i(
-            "Main : SharedPreference",
-            sharedPreferences.getInt("Best Time", Int.MAX_VALUE).toString()
-        )
+        //Log.i("Main : SharedPreference", sharedPreferences.getString("Last Game Time", ""))
+        //Log.i("Main : SharedPreference", sharedPreferences.getString("Best Game Time", ""))
+        //Log.i("Main : SharedPreference",sharedPreferences.getInt("Best Time", Int.MAX_VALUE).toString())
         GameEngine.getInstance()?.newSharedPreferences = sharedPreferences
         GameEngine.getInstance()?.lastGameTime = LastGameTime
         GameEngine.getInstance()?.bestGameTime = BestGameTime
@@ -81,13 +78,13 @@ class MainActivity : AppCompatActivity() {
         app.SetRows(rows)
         app.SetCols(cols)
         app.SetMines(mines)
-        Log.i("Information", "MainActivity : setupBoard : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
+        //Log.i("Information", "MainActivity : setupBoard : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
         //Generator.generate(app.GetMines(), app.GetCols(), app.GetRows())
     }
 
     // Function to get difficulty levels from various radio buttons
     fun GetDifficulty(view : View) {
-        Log.i("MainActivity", "inside get difficulty function")
+        //Log.i("MainActivity", "inside get difficulty function")
         if (view is RadioButton) {
             val checked = view.isChecked
             when (view.getId()) {
@@ -159,15 +156,8 @@ class MainActivity : AppCompatActivity() {
                         app.SetRows(rows_count_int)
                         app.SetCols(cols_count_int)
                         app.SetMines(mines_count_int)
-                        Log.i(
-                            "Information",
-                            "MainActivity : CustomBoardInputs : Value of rows count is {$rows_count_string}, cols count is {$cols_count_string}, mines count is {$mines_count_string}."
-                        )
-                        setupBoard(
-                            rows_count_string.toInt(),
-                            cols_count_string.toInt(),
-                            mines_count_string.toInt()
-                        )
+                        //Log.i("Information", "MainActivity : CustomBoardInputs : Value of rows count is {$rows_count_string}, cols count is {$cols_count_string}, mines count is {$mines_count_string}.")
+                        setupBoard(rows_count_string.toInt(), cols_count_string.toInt(), mines_count_string.toInt())
                         GoToBoardActivity()
                     }
                     else {
@@ -189,7 +179,7 @@ class MainActivity : AppCompatActivity() {
 
     // Going to another activity when user clicked the start button.
     fun GoToBoardActivity() {
-        Log.i("Information", "MainActivity : GoToBoardActivity : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
+        //Log.i("Information", "MainActivity : GoToBoardActivity : Value of rows count is ${app.GetRows()}, cols count is ${app.GetCols()}, mines count is ${app.GetMines()}.")
         //setContentView(R.layout.activity_board)
         setupBoard(app.GetRows(), app.GetCols(), app.GetMines())
         //GameEngine.getInstance()?.createGrid(this)

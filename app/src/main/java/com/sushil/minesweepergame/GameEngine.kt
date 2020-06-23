@@ -14,10 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.GridLayoutAnimationController
-import android.widget.Button
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import com.sushil.minesweepergame.views.grid.Cell
@@ -48,6 +45,8 @@ class GameEngine : AppCompatActivity() {
     lateinit var GeneratedGrid : Array<IntArray>
     var MinesweeperGrid = Array(25) { arrayOfNulls<Cell>(40) }
     var FlagRemainingtextview : TextView? = null
+    //var gameWinImage : ImageView? = null
+    //var gameLoseImage : ImageView? = null
     lateinit var buttonRestart : Button
     //lateinit var binding : ActivityBoardBinding
     lateinit var con : Context
@@ -60,8 +59,9 @@ class GameEngine : AppCompatActivity() {
     var minutes_string = ""
     var seconds_string = ""
     var cellsNotClicked = 0
-    var gameWon = false
-    var gameLost = false
+    //var gameWon = false
+    //var gameLost = false
+    var gameEnd = true
     var newgame = true
     var newSharedPreferences : SharedPreferences? = null
     var vibe : Vibrator? = null
@@ -70,7 +70,7 @@ class GameEngine : AppCompatActivity() {
     var runnableCode = object : Runnable {
         override fun run() {
             //TODO("Not yet implemented")
-            Log.i("djfsdk","fjdfkj")
+            //Log.i("djfsdk","fjdfkj")
         }
     }
     //var binding = ActivityBoardBinding.inflate(layoutInflater)
@@ -103,7 +103,7 @@ class GameEngine : AppCompatActivity() {
     //private fun setGrid(context: Context, grid: Array<IntArray>) {
     // Setting view to the grid of the game so that user can click on the cells.
     fun setGrid(context: Context) {
-        Log.i("GameEngine SetGrid","app.GetRows = ${app.GetRows()}, app.GetCols = ${app.GetCols()}")
+        //Log.i("GameEngine SetGrid","app.GetRows = ${app.GetRows()}, app.GetCols = ${app.GetCols()}")
         //WIDTH = app.GetCols()
         //HEIGHT = app.GetRows()
         for (x in 0 until app.GetCols()) {
@@ -146,7 +146,7 @@ class GameEngine : AppCompatActivity() {
         //val y = position / WIDTH
         val x = position % app.GetCols()
         val y = position / app.GetCols()
-        Log.i("Information", "GameEngine : GetCellAt : position = $position, width = ${app.GetCols()}, x = $x, y = $y")
+        //Log.i("Information", "GameEngine : GetCellAt : position = $position, width = ${app.GetCols()}, x = $x, y = $y")
         return MinesweeperGrid[x][y]
     }
 
@@ -159,6 +159,7 @@ class GameEngine : AppCompatActivity() {
     fun click(x: Int, y: Int) {
 
         // If it is first click and user clicked a bomb then we are setting up the game again.
+        gameEnd = false
         if (isFirstClick) {
             //setCellValue(con)
             while (getCellAt(x, y)!!.getValue() == -1) {
@@ -242,8 +243,9 @@ class GameEngine : AppCompatActivity() {
         //var bomb = app.GetMines()
         //flag++
         // Vibrate for 80 milliseconds when a cell is flagged.
+        gameEnd = false
         vibe!!.vibrate(500)
-        Log.i("GameEngine : Flag", "Vibrated")
+        //Log.i("GameEngine : Flag", "Vibrated")
         if (isFirstClick) {
             //setCellValue(con)
             isFirstClick = false
@@ -281,8 +283,10 @@ class GameEngine : AppCompatActivity() {
 
     // Function when user won the game
     private fun onGameWon(a: Int, b: Int) {
+        gameEnd = true
         // Show message in a toast
         Toast.makeText(context, "Game Won", Toast.LENGTH_LONG).show()
+        //gameWinImage!!.visibility = View.VISIBLE
 
         // Stop the timer
         handler.removeCallbacks(runnableCode)
@@ -295,7 +299,7 @@ class GameEngine : AppCompatActivity() {
         // Setting best game time
         if (time < newSharedPreferences!!.getInt("Best Time", Int.MAX_VALUE)) {
             bestTime = time
-            Log.i("GameEngine : timer", "best time = $bestTime")
+            //Log.i("GameEngine : timer", "best time = $bestTime")
             bestGameTime!!.text = "Best Game Time : $minutes_string:$seconds_string"
             newSharedPreferences!!.edit().putInt("Best Time", bestTime).apply()
             newSharedPreferences!!.edit().putString("Best Game Time", "Best Game Time : $minutes_string:$seconds_string").apply()
@@ -319,7 +323,8 @@ class GameEngine : AppCompatActivity() {
     private fun onGameLost() {
         // handle lost game
         //isGameOver = true
-        gameLost = true
+        gameEnd = true
+        //gameLoseImage!!.visibility = View.VISIBLE
 
         // Show Game lost message in a  toast.
         Toast.makeText(context, "Game lost", Toast.LENGTH_LONG).show()
@@ -369,7 +374,7 @@ class GameEngine : AppCompatActivity() {
                 else {
                     seconds_string = seconds.toString()
                 }
-                Log.i("GameEngine_Timer", "second = $time")
+                //Log.i("GameEngine_Timer", "second = $time")
                 //Timertextview.text = "00:10"
                 //Timertextview.text = binding.resources.getString(R.string.app_name)
                 timertextview!!.text = "$minutes_string:$seconds_string"

@@ -39,6 +39,8 @@ class Board : AppCompatActivity() {
     var RestartButton : Button? = null
     lateinit var TimerTextView : TextView
     lateinit var FlagRemaining : TextView
+    //lateinit var GameWinImage : ImageView
+    //lateinit var GameLoseImage : ImageView
     lateinit var binding : ActivityBoardBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +57,36 @@ class Board : AppCompatActivity() {
         // Getting reference of the Mines to be flagged textview
         FlagRemaining = findViewById(R.id.textViewFlagRemaining)
 
+        // Getting reference of the imageview of game win
+        //GameWinImage = findViewById<ImageView>(R.id.imageViewgame_win)
+
+        // Getting reference of the imageview of game win
+        //GameLoseImage = findViewById<ImageView>(R.id.imageViewGameLose)
+
         // Getting reference of the restart button
         RestartButton = binding.buttonRestart //findViewById(R.id.buttonRestart)
         RestartButton!!.setOnClickListener(View.OnClickListener() {
-            restartAlert()
+            if ( /*GameEngine.getInstance()?.cellsNotClicked != (app.GetRows()*app.GetCols())*/  (!GameEngine.getInstance()?.gameEnd!!)) {
+                restartAlert()
+            }
+            else {
+                TimerTextView.text = "00:00"
+                FlagRemaining.text = app.GetMines().toString()
+                //Log.i("Board: Restart","app.GetMines = ${app.GetMines()}")
+
+                // Setting various variable of the GameEngine class when restart button is clicked.
+                GameEngine.getInstance()?.handler!!.removeCallbacks(GameEngine.getInstance()?.runnableCode)
+                GameEngine.getInstance()?.timertextview = TimerTextView
+                GameEngine.getInstance()?.FlagRemainingtextview = FlagRemaining
+                GameEngine.getInstance()?.flag = 0
+                GameEngine.getInstance()?.time = 0
+                GameEngine.getInstance()?.con = applicationContext
+                GameEngine.getInstance()?.isFirstClick = false
+                GameEngine.getInstance()?.createGrid(applicationContext)
+                GameEngine.getInstance()?.setCellValue(applicationContext)
+                GameEngine.getInstance()?.gameEnd = true
+                GameEngine.getInstance()?.cellsNotClicked = (app.GetRows()*app.GetCols())
+            }
         })
 
         // Setting various variable of GameEngine class when a game starts.
@@ -72,12 +100,19 @@ class Board : AppCompatActivity() {
         GameEngine.getInstance()?.isFirstClick = false
         GameEngine.getInstance()?.createGrid(this)
         GameEngine.getInstance()?.setCellValue(this)
+        //GameEngine.getInstance()?.gameWon = true
+        GameEngine.getInstance()?.gameEnd = true
+        //GameEngine.getInstance()?.cellsNotClicked = (app.GetRows()*app.GetCols())
+        //GameEngine.getInstance()?.gameWinImage = GameWinImage
+        //GameEngine.getInstance()?.gameLoseImage = GameLoseImage
+        //GameEngine.getInstance()?.gameWinImage!!.visibility = View.INVISIBLE
+        //GameEngine.getInstance()?.gameLoseImage!!.visibility = View.INVISIBLE
 
     }
 
     // Function  to show the restart alert dialog view.
     fun restartAlert() {
-        Log.i("Board", "Inside Restart Alert")
+        //Log.i("Board", "Inside Restart Alert")
         val builder = AlertDialog.Builder(this)
         with (builder) {
             setTitle("Restart Game")
@@ -86,7 +121,7 @@ class Board : AppCompatActivity() {
             setPositiveButton("Yes", fun(dialog: DialogInterface, id: Int) {
                 TimerTextView.text = "00:00"
                 FlagRemaining.text = app.GetMines().toString()
-                Log.i("Board: Restart","app.GetMines = ${app.GetMines()}")
+                //Log.i("Board: Restart","app.GetMines = ${app.GetMines()}")
 
                 // Setting various variable of the GameEngine class when restart button is clicked.
                 GameEngine.getInstance()?.handler!!.removeCallbacks(GameEngine.getInstance()?.runnableCode)
@@ -98,6 +133,13 @@ class Board : AppCompatActivity() {
                 GameEngine.getInstance()?.isFirstClick = false
                 GameEngine.getInstance()?.createGrid(applicationContext)
                 GameEngine.getInstance()?.setCellValue(applicationContext)
+                GameEngine.getInstance()?.gameEnd = true
+                GameEngine.getInstance()?.cellsNotClicked = (app.GetRows()*app.GetCols())
+                //GameEngine.getInstance()?.gameWinImage = GameWinImage
+                //GameEngine.getInstance()?.gameLoseImage = GameLoseImage
+                //GameEngine.getInstance()?.gameWinImage!!.visibility = View.INVISIBLE
+                //GameEngine.getInstance()?.gameLoseImage!!.visibility = View.INVISIBLE
+
             })
             setNegativeButton("No", fun(dialog: DialogInterface, id: Int) {
                 dialog.cancel()

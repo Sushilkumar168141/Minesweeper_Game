@@ -28,7 +28,7 @@ class Grid(context: Context, attrs: AttributeSet?) : GridView(context, attrs) {
 
     private inner class GridAdapter : BaseAdapter() {
         override fun getCount(): Int {
-            Log.i("Grid", "Grid : Grid Adapter : width = $WIDTH, height = $HEIGHT")
+            //Log.i("Grid", "Grid : Grid Adapter : width = $WIDTH, height = $HEIGHT")
             return WIDTH * HEIGHT
         }
 

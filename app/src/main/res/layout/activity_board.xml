@@ -14,8 +14,6 @@
         android:layout_weight="0"
         android:text="Mines : "
         app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
-        app:layout_constraintEnd_toStartOf="@+id/buttonRestart"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
 
@@ -35,14 +33,13 @@
         android:id="@+id/buttonRestart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="148dp"
         android:layout_weight="0"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:shadowColor="#FFEB3B"
         android:text="Restart"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -53,7 +50,6 @@
         android:text="Time"
         app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
         app:layout_constraintEnd_toStartOf="@+id/textViewTimer"
-        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toEndOf="@+id/buttonRestart"
         app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
 
@@ -65,19 +61,52 @@
         android:layout_weight="1"
         android:text="00:00"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
+        app:layout_constraintTop_toTopOf="@+id/textViewTime" />
+
+    <ImageView
+        android:id="@+id/imageViewgame_win"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="game win image"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRestart"
+        app:srcCompat="@drawable/game_win"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageViewGameLose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="game lose image"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/minesweeperGridView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRestart"
+        app:srcCompat="@drawable/game_lose"
+        tools:visibility="visible" />
 
     <com.sushil.minesweepergame.views.grid.Grid
         android:id="@+id/minesweeperGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingClass,MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRestart"
+        app:layout_constraintVertical_bias="0.162"
+        tools:ignore="MissingClass,MissingConstraints">
+
+    </com.sushil.minesweepergame.views.grid.Grid>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
