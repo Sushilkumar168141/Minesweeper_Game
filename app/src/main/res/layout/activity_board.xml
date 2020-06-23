@@ -6,61 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textViewMines"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_weight="0"
+        android:text="Mines : "
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRestart"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
 
-        <TextView
-            android:id="@+id/textViewFlagRemaining"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:text="0"
-            android:textAlignment="center" />
+    <TextView
+        android:id="@+id/textViewFlagRemaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRestart"
+        app:layout_constraintStart_toEndOf="@+id/textViewMines"
+        app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
 
-        <Button
-            android:id="@+id/buttonRestart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:shadowColor="#FFEB3B"
-            android:text="Restart" />
+    <Button
+        android:id="@+id/buttonRestart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="148dp"
+        android:layout_weight="0"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:shadowColor="#FFEB3B"
+        android:text="Restart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewTimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="16dp"
-            android:layout_weight="1"
-            android:text="00:00"
-            android:textAlignment="center" />
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Time"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTimer"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toEndOf="@+id/buttonRestart"
+        app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_weight="1"
+        android:text="00:00"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRestart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonRestart" />
 
     <com.sushil.minesweepergame.views.grid.Grid
         android:id="@+id/minesweeperGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.466"
         tools:ignore="MissingClass,MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

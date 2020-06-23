@@ -1,3 +1,5 @@
+/* Class to access variable  in all classes. */
+
 package com.sushil.minesweepergame
 
 import android.app.Application

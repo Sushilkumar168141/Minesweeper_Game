@@ -1,3 +1,5 @@
+/* Class to set up the  behaviour of various view presents on the second activity */
+
 package com.sushil.minesweepergame
 
 import android.annotation.SuppressLint
@@ -43,14 +45,23 @@ class Board : AppCompatActivity() {
         //context = this
         binding = ActivityBoardBinding.inflate(layoutInflater)
         val view = binding.root
+        //Setting view of the activity
         setContentView(view)
+
+        // Getting reference of the Timer Text View
         //TimerTextView = binding.textViewTimer
         TimerTextView = findViewById<TextView>(R.id.textViewTimer)
+
+        // Getting reference of the Mines to be flagged textview
         FlagRemaining = findViewById(R.id.textViewFlagRemaining)
+
+        // Getting reference of the restart button
         RestartButton = binding.buttonRestart //findViewById(R.id.buttonRestart)
         RestartButton!!.setOnClickListener(View.OnClickListener() {
             restartAlert()
         })
+
+        // Setting various variable of GameEngine class when a game starts.
         FlagRemaining.text = app.GetMines().toString()
         GameEngine.getInstance()?.handler!!.removeCallbacks(GameEngine.getInstance()?.runnableCode)
         GameEngine.getInstance()?.timertextview = TimerTextView
@@ -61,15 +72,13 @@ class Board : AppCompatActivity() {
         GameEngine.getInstance()?.isFirstClick = false
         GameEngine.getInstance()?.createGrid(this)
         GameEngine.getInstance()?.setCellValue(this)
-        //TimerTextView.text = "00:10"
-        //timer()
 
     }
 
+    // Function  to show the restart alert dialog view.
     fun restartAlert() {
         Log.i("Board", "Inside Restart Alert")
         val builder = AlertDialog.Builder(this)
-        //val inflater = this.layoutInflater
         with (builder) {
             setTitle("Restart Game")
             setIcon(R.drawable.warning)
@@ -78,6 +87,8 @@ class Board : AppCompatActivity() {
                 TimerTextView.text = "00:00"
                 FlagRemaining.text = app.GetMines().toString()
                 Log.i("Board: Restart","app.GetMines = ${app.GetMines()}")
+
+                // Setting various variable of the GameEngine class when restart button is clicked.
                 GameEngine.getInstance()?.handler!!.removeCallbacks(GameEngine.getInstance()?.runnableCode)
                 GameEngine.getInstance()?.timertextview = TimerTextView
                 GameEngine.getInstance()?.FlagRemainingtextview = FlagRemaining
@@ -95,32 +106,6 @@ class Board : AppCompatActivity() {
         }
         val alertDialog = builder.create()
         alertDialog.show()
-    }
-
-    fun timer() {
-        var seconds=0
-        //val inflater = LayoutInflater.from(context)
-        //val bind = ActivityBoardBinding.inflate(layoutInflater)
-        //val bind = inflater.inflate(R.layout.activity_board, null)
-        val Timer = binding.textViewTimer
-        //var textViewTimer: TextView = findViewById(R.id.textViewTimer)
-        //var view = inflater.inflate(R.layout.activity_board, R.layout.activity_main, false)
-        //TimerTextView = R.id.
-        //Log.i("Board timer","${Board().binding}, $TimerTextView")
-        //TimerTextView = binding.textViewTimer
-        //TimerTextView!!.text = "00:10"
-        var handler = Handler()
-        var runnableCode = object : Runnable {
-            override fun run() {
-                seconds++
-                Log.i("GameEngine_Timer", "Runnable has run, A second must have passed")
-                Timer.text = seconds.toString()
-                //TimerTextView.text = resources.getString(R.string.app_name)
-                handler.postDelayed(this, 1000)
-            }
-        }
-        handler.post(runnableCode)
-
     }
 
 

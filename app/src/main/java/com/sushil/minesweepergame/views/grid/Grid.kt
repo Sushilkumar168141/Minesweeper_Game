@@ -1,3 +1,6 @@
+/* Class to arrange cells in a grid view */
+
+
 package com.sushil.minesweepergame.views.grid
 
 import android.content.Context

@@ -1,3 +1,5 @@
+/* Class to generate the minesweeper grid */
+
 package com.sushil.minesweepergame.util
 
 import java.util.*
@@ -12,6 +14,8 @@ object Generator {
         for (x in 0 until width) {
             grid[x] = IntArray(height)
         }
+
+        // Setting bomb at random places in the grid
         while (bombnumber > 0) {
             val x: Int = r.nextInt(width)
             val y: Int = r.nextInt(height)
@@ -22,10 +26,13 @@ object Generator {
                 bombnumber--
             }
         }
+
+        // Call function to calculate number  of rest of the cells based on nearby neighboring bombs
         grid = calculateNeigbours(grid, width, height)
         return grid
     }
 
+    // Function tocalculate number  of cells based on nearby neighboring bombs
     private fun calculateNeigbours(
         grid: Array<IntArray>,
         width: Int,
@@ -39,13 +46,7 @@ object Generator {
         return grid
     }
 
-    private fun getNeighbourNumber(
-        grid: Array<IntArray>,
-        x: Int,
-        y: Int,
-        width: Int,
-        height: Int
-    ): Int {
+    private fun getNeighbourNumber(grid: Array<IntArray>, x: Int, y: Int, width: Int, height: Int): Int {
         if (grid[x][y] == -1) {
             return -1
         }
@@ -61,13 +62,8 @@ object Generator {
         return count
     }
 
-    private fun isMineAt(
-        grid: Array<IntArray>,
-        x: Int,
-        y: Int,
-        width: Int,
-        height: Int
-    ): Boolean {
+    // Return whether a cell  contained mine or not
+    private fun isMineAt(grid: Array<IntArray>, x: Int, y: Int, width: Int, height: Int): Boolean {
         if (x >= 0 && y >= 0 && x < width && y < height) {
             if (grid[x][y] == -1) {
                 return true
