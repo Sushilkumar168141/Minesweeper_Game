@@ -54,15 +54,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="240dp" />
+
             <TextView
                 android:id="@+id/textViewBestGameTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:text="@string/best_time_"
-                app:layout_constraintEnd_toEndOf="@+id/game_name"
-                app:layout_constraintStart_toStartOf="@+id/game_name"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/game_name" />
 
             <TextView
@@ -71,20 +77,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:text="@string/last_game_time"
-                app:layout_constraintEnd_toEndOf="@+id/textViewBestGameTime"
-                app:layout_constraintStart_toStartOf="@+id/textViewBestGameTime"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewBestGameTime" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:fontFamily="sans-serif-black"
                 android:text="@string/select_difficulty"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/textViewLastGameTime"
-                app:layout_constraintStart_toStartOf="@+id/textViewLastGameTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLastGameTime" />
 
             <RadioGroup
@@ -131,10 +137,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/or" />
 
             <Button
+                android:id="@+id/buttonShareScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewLastGameTime"
+                app:layout_constraintEnd_toEndOf="@+id/game_name"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/textViewBestGameTime" />
+
+            <Button
                 android:id="@+id/button_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="116dp"
                 android:text="@string/start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/button_custom_board"

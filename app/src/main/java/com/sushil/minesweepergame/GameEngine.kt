@@ -5,10 +5,7 @@ package com.sushil.minesweepergame
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Bundle
-import android.os.Handler
-import android.os.PersistableBundle
-import android.os.Vibrator
+import android.os.*
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,8 +42,9 @@ class GameEngine : AppCompatActivity() {
     lateinit var GeneratedGrid : Array<IntArray>
     var MinesweeperGrid = Array(25) { arrayOfNulls<Cell>(40) }
     var FlagRemainingtextview : TextView? = null
-    //var gameWinImage : ImageView? = null
-    //var gameLoseImage : ImageView? = null
+    var gameWinImage : ImageView? = null
+    var gameLoseImage : ImageView? = null
+    var minesweeperGridView : View? = null
     lateinit var buttonRestart : Button
     //lateinit var binding : ActivityBoardBinding
     lateinit var con : Context
@@ -286,6 +284,8 @@ class GameEngine : AppCompatActivity() {
         gameEnd = true
         // Show message in a toast
         Toast.makeText(context, "Game Won", Toast.LENGTH_LONG).show()
+
+        //minesweeperGridView!!.visibility = View.INVISIBLE
         //gameWinImage!!.visibility = View.VISIBLE
 
         // Stop the timer
@@ -324,7 +324,7 @@ class GameEngine : AppCompatActivity() {
         // handle lost game
         //isGameOver = true
         gameEnd = true
-        //gameLoseImage!!.visibility = View.VISIBLE
+
 
         // Show Game lost message in a  toast.
         Toast.makeText(context, "Game lost", Toast.LENGTH_LONG).show()
@@ -346,6 +346,9 @@ class GameEngine : AppCompatActivity() {
             }
 
         }
+        //SystemClock.sleep(2000)
+        //minesweeperGridView!!.visibility = View.INVISIBLE
+        //gameLoseImage!!.visibility = View.VISIBLE
     }
 
     // Function to manage timer

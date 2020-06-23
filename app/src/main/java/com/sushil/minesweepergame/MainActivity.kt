@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity() {
             CustomBoardInputs()
         })
 
+        var buttonShare : Button = findViewById(R.id.buttonShareScore)
+        buttonShare.setOnClickListener(View.OnClickListener {
+            shareScore()
+        })
+
         // Setting vibrator for game
         var vibrate: Vibrator = applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         GameEngine.getInstance()?.vibe = vibrate
@@ -71,6 +76,17 @@ class MainActivity : AppCompatActivity() {
         GameEngine.getInstance()?.lastGameTime = LastGameTime
         GameEngine.getInstance()?.bestGameTime = BestGameTime
         //GameEngine.getInstance()?.bestTime = best_time
+    }
+
+    private fun shareScore() {
+        val sendIntent : Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "Hi, My Best Time for Minesweeper Game is ${(findViewById<TextView>(R.id.textViewBestGameTime) as TextView).text.toString().subSequence(15,22)} minutes")
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent,null)
+        startActivity(shareIntent)
+        Log.i("Main : Share",(findViewById<TextView>(R.id.textViewBestGameTime) as TextView).text.toString())
     }
 
     // Function to set up the board
