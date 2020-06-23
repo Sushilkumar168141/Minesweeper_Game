@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import com.sushil.minesweepergame.Variables
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         buttonCustom.setOnClickListener(View.OnClickListener {
             CustomBoardInputs()
         })
+
+        var vibrate : Vibrator = applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        GameEngine.getInstance()?.vibe = vibrate
 
         var LastGameTime = findViewById<TextView>(R.id.textViewLastGameTime)
         var BestGameTime = findViewById<TextView>(R.id.textViewBestGameTime)

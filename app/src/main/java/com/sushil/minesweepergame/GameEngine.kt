@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
+import android.os.Vibrator
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
@@ -61,6 +62,7 @@ class GameEngine : AppCompatActivity() {
     var gameLost = false
     var newgame = true
     var newSharedPreferences : SharedPreferences? = null
+    var vibe : Vibrator? = null
     var handler = Handler()
     var runnableCode = object : Runnable {
         override fun run() {
@@ -218,6 +220,7 @@ class GameEngine : AppCompatActivity() {
     fun flag(x: Int, y: Int) {
         //var bomb = app.GetMines()
         //flag++
+        vibe!!.vibrate(80)
         isFirstClick = false
         var isFlagged = getCellAt(x, y)!!.isFlagged()
         getCellAt(x, y)!!.setFlagged(!isFlagged)
