@@ -19,12 +19,6 @@ class Grid(context: Context, attrs: AttributeSet?) : GridView(context, attrs) {
     val WIDTH = app.GetCols()
     val HEIGHT = app.GetRows()
     val BOMB_NUMBER = app.GetMines()
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        //var expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE shr 2, MeasureSpec.AT_MOST)
-        //super.onMeasure(widthMeasureSpec, expandSpec)
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //super.onMeasure(WIDTH, HEIGHT)
-    }
 
     private inner class GridAdapter : BaseAdapter() {
         override fun getCount(): Int {

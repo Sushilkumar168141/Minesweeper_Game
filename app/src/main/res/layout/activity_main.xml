@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FFEB3B"
     tools:context=".MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
+        android:backgroundTint="#FFEB3B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foregroundTint="#FFEB3B"
             tools:context=".MainActivity">
 
             <TextView
@@ -41,6 +44,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:backgroundTint="#FFEB3B"
                 android:fontFamily="sans-serif-black"
                 android:includeFontPadding="true"
                 android:text="@string/game_name"
@@ -99,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:backgroundTint="#F44336"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5">
 
@@ -129,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:backgroundTint="#F44336"
                 android:fontFamily="sans-serif-medium"
                 android:includeFontPadding="true"
                 android:text="@string/make_a_custom_board"
@@ -140,6 +146,7 @@
                 android:id="@+id/buttonShareScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
                 android:text="Share"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewLastGameTime"
                 app:layout_constraintEnd_toEndOf="@+id/game_name"
@@ -151,6 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="116dp"
+                android:backgroundTint="#2943D1"
                 android:text="@string/start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/button_custom_board"

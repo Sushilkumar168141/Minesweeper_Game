@@ -7,7 +7,7 @@ import android.view.View
 import com.sushil.minesweepergame.Board
 import com.sushil.minesweepergame.Variables
 
-public abstract class BaseCell (context: Context) : View(context) {
+abstract class BaseCell (context: Context) : View(context) {
     var app = Variables()
     private var value = 0
     private var isBomb = false

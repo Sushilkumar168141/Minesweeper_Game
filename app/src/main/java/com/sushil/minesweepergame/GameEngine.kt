@@ -42,9 +42,6 @@ class GameEngine : AppCompatActivity() {
     lateinit var GeneratedGrid : Array<IntArray>
     var MinesweeperGrid = Array(25) { arrayOfNulls<Cell>(40) }
     var FlagRemainingtextview : TextView? = null
-    var gameWinImage : ImageView? = null
-    var gameLoseImage : ImageView? = null
-    var minesweeperGridView : View? = null
     lateinit var buttonRestart : Button
     //lateinit var binding : ActivityBoardBinding
     lateinit var con : Context
@@ -285,8 +282,6 @@ class GameEngine : AppCompatActivity() {
         // Show message in a toast
         Toast.makeText(context, "Game Won", Toast.LENGTH_LONG).show()
 
-        //minesweeperGridView!!.visibility = View.INVISIBLE
-        //gameWinImage!!.visibility = View.VISIBLE
 
         // Stop the timer
         handler.removeCallbacks(runnableCode)
@@ -346,9 +341,7 @@ class GameEngine : AppCompatActivity() {
             }
 
         }
-        //SystemClock.sleep(2000)
-        //minesweeperGridView!!.visibility = View.INVISIBLE
-        //gameLoseImage!!.visibility = View.VISIBLE
+
     }
 
     // Function to manage timer
