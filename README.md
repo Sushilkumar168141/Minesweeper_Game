@@ -27,6 +27,20 @@ Conditions for custom board.
 Invention :
 There is an option to share your best time of the game.
 
+Screenshots of the  game:<br>
+![Screenshot_2020-06-28-07-30-57-299_com android settings](https://user-images.githubusercontent.com/41999180/124988266-65d47400-e05b-11eb-8338-fc4ad36ec1f4.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-31-12-476_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124988317-78e74400-e05b-11eb-92da-a555b280da3a.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-31-16-896_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989258-9668dd80-e05c-11eb-81cc-1d7b4a709c6d.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-31-24-258_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989261-9832a100-e05c-11eb-9038-3c9e668b12d6.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-33-10-167_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989268-99fc6480-e05c-11eb-9955-7d233cee3d5a.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-33-34-331_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989273-9bc62800-e05c-11eb-96ca-df5452442b75.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-33-38-174_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989277-9cf75500-e05c-11eb-8d2d-c17afb16c718.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-33-48-249_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989283-9f59af00-e05c-11eb-8a9f-4e7906a2a24c.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-33-56-446_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989500-d203a780-e05c-11eb-9416-919d0f31e8fd.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-34-01-040_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989304-a385cc80-e05c-11eb-9fdd-b22b57e82828.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-34-06-620_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989316-a54f9000-e05c-11eb-9aa3-ad178f985928.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+![Screenshot_2020-06-28-07-34-22-658_com sushil minesweepergame](https://user-images.githubusercontent.com/41999180/124989326-a7b1ea00-e05c-11eb-94e1-ab7c7e2d2dd2.jpg)&nbsp;&nbsp;&nbsp;&nbsp;
+
 Developed By : 
 Sushil Kumar
 sushilkumar168141@gmail.com
